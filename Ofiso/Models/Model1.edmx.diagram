@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ac344d129f184ca0971a6d4f72a61e6d" Name="Diagram1">
+        <EntityTypeShape EntityType="OficoModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OficoModel.OfficeImage" Width="1.5" PointX="7.5" PointY="6.375" />
+        <EntityTypeShape EntityType="OficoModel.Offices" Width="1.5" PointX="5.25" PointY="2.125" />
+        <EntityTypeShape EntityType="OficoModel.Rentals" Width="1.5" PointX="7.5" PointY="2.375" />
+        <EntityTypeShape EntityType="OficoModel.Users" Width="1.5" PointX="3" PointY="2.375" />
+        <EntityTypeShape EntityType="OficoModel.UserType" Width="1.5" PointX="0.75" PointY="2.875" />
+        <AssociationConnector Association="OficoModel.FK_OfficeImage_Offices" />
+        <AssociationConnector Association="OficoModel.FK_Offices_Users" />
+        <AssociationConnector Association="OficoModel.FK_Rentals_Offices" />
+        <AssociationConnector Association="OficoModel.FK_Rentals_Users" />
+        <AssociationConnector Association="OficoModel.FK_Users_UserType" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

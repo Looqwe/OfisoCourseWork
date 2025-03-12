@@ -1,0 +1,40 @@
+﻿<Window x:Class="Ofiso.View.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ofiso.View.Windows"
+        mc:Ignorable="d"
+        Title="ОФИСО" SizeToContent="WidthAndHeight" 
+        MinHeight="540" MinWidth="960" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="209*"/>
+            <ColumnDefinition Width="271*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Frame Name="AuthorizationPage" Grid.Row="1"
+         NavigationUIVisibility="Hidden" Navigated="AuthorizationPage_Navigated" Grid.ColumnSpan="2"/>
+
+        <Grid Name="Top" Background="#778DA9" Grid.ColumnSpan="2">
+            <Button 
+                x:Name="btnProfile" 
+                Width="40" 
+                Height="40" 
+                Margin="0,0,20,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"           
+                Click="btnProfile_Click">
+                <Image Source="C:\Users\ADMIN\Documents\repos\Ofiso\Ofiso\Photo\free-icon-user-2661519.png" Stretch="Uniform"/>
+            </Button>
+        </Grid>
+
+    </Grid>
+</Window>
