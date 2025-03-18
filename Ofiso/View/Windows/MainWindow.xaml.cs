@@ -37,7 +37,24 @@ namespace Ofiso.View.Windows
 
         private void btnProfile_Click(object sender, RoutedEventArgs e)
         {
-            FrameHelper.mainFrame.Navigate(new UserPage());
+            if (AppState.CurrentUserId == 0)
+            {
+                MessageBox.Show("Пользователь не авторизован!");
+                return;
+            }
+
+            FrameHelper.mainFrame.Navigate(new UserPage(AppState.CurrentUserId));
+        }
+
+        private void btnhome_Click(object sender, RoutedEventArgs e)
+        {
+            if (AppState.CurrentUserId == 0)
+            {
+                MessageBox.Show("Пользователь не авторизован!");
+                return;
+            }
+
+            FrameHelper.mainFrame.Navigate(new MainPage());
         }
     }
 }

@@ -25,8 +25,6 @@ namespace Ofiso.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public virtual DbSet<OfficeImage> OfficeImage { get; set; }
         public virtual DbSet<Offices> Offices { get; set; }
         public virtual DbSet<Rentals> Rentals { get; set; }
         public virtual DbSet<Users> Users { get; set; }

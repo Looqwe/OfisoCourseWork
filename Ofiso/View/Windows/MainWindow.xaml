@@ -25,6 +25,7 @@
 
         <Grid Name="Top" Background="#778DA9" Grid.ColumnSpan="2">
             <Button 
+                Background="White"
                 x:Name="btnProfile" 
                 Width="40" 
                 Height="40" 
@@ -33,6 +34,17 @@
                 VerticalAlignment="Center"           
                 Click="btnProfile_Click">
                 <Image Source="C:\Users\ADMIN\Documents\repos\Ofiso\Ofiso\Photo\free-icon-user-2661519.png" Stretch="Uniform"/>
+            </Button>
+            <Button
+                Background="White"
+                x:Name="btnhome" 
+                Width="40" 
+                Height="40" 
+                Margin="0,0,80,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"           
+                Click="btnhome_Click">
+                <Image Source="C:\Users\ADMIN\Documents\repos\Ofiso\Ofiso\Photo\free-icon-home-1946488.png"/>
             </Button>
         </Grid>
 

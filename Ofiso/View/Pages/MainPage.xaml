@@ -98,16 +98,19 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Image Source="{Binding ImageUrl}"
+                                    <Image Source="{Binding Photo}"
                                       Stretch="UniformToFill"
                                       Height="150"
                                       Width="200"/>
 
-                                    <StackPanel Grid.Column="1" Margin="20 0">
+                                    <StackPanel Name="OfficesStackPanel" Grid.Column="1" Margin="20 0">
                                         <TextBlock Text="{Binding Title}"
                                               FontSize="20"
                                               FontWeight="Bold"/>
                                         <TextBlock Text="{Binding Address}"
+                                              Margin="0 5 0 0"
+                                              Foreground="#666666"/>
+                                        <TextBlock Text="{Binding Floor}"
                                               Margin="0 5 0 0"
                                               Foreground="#666666"/>
                                         <TextBlock Text="{Binding Description}"
@@ -119,7 +122,7 @@
                                     <StackPanel Grid.Column="2" 
                                            
                                            VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Price}"
+                                        <TextBlock Text="{Binding PricePerMont}"
                                               FontSize="24"
                                               FontWeight="Bold"
                                               Foreground="#778DA9"/>

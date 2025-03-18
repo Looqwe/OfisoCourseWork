@@ -5,17 +5,55 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Ofiso.View.Pages"
       MinWidth="960" MaxWidth="960" MinHeight="560" MaxHeight="560"
-      Title="Main">
+      Title="Личный кабинет"
+      FontFamily="Segoe UI">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="700"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
-        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
-                                            
+    <Grid Margin="20">
+        <!--Разметка-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid>
+                <!--Разметка-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+                <!--Элементы-->
+                <TextBlock Text="Имя" Grid.Row="1" TextAlignment="Right"/>
+                <TextBlock Text="Телефон" Grid.Row="3" TextAlignment="Right"/>
+                <TextBlock Text="Почта" Grid.Row="5" TextAlignment="Right"/>
+                <TextBlock Text="Пароль" Grid.Row="7" TextAlignment="Right"/>
+
+                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Fname}"/>
+                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding NumberPhone}"/>
+                <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding Email}"/>
+                <Button Name="ChangePass" Click="ChangePass_Click" Height="50" Background="#1B263B" Foreground="White" Content="Сменить пароль" Grid.Row="7" Grid.Column="2"/>
+            </Grid>
+        </Grid>
+     
+
+        <!-- Блок с объявлениями пользователя -->
+        <ScrollViewer Grid.Row="1" Margin="0 20 0 0">
+            <StackPanel Name="StPof">
+                
+
             </StackPanel>
         </ScrollViewer>
     </Grid>

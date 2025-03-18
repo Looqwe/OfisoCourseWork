@@ -17,7 +17,6 @@ namespace Ofiso.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Offices()
         {
-            this.OfficeImage = new HashSet<OfficeImage>();
             this.Rentals = new HashSet<Rentals>();
         }
     
@@ -29,9 +28,8 @@ namespace Ofiso.Models
         public string Description { get; set; }
         public Nullable<decimal> PricePerMont { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public byte[] Photo { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OfficeImage> OfficeImage { get; set; }
         public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rentals> Rentals { get; set; }

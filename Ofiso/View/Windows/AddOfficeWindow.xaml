@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Ofiso.View.Windows.AddOfficeWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Добавить объявление" Height="500" Width="400" WindowStartupLocation="CenterScreen">
+        Title="Добавить объявление" Height="600" Width="400" WindowStartupLocation="CenterScreen">
     <StackPanel Margin="10">
         
         <TextBlock Text="Заголовок*"/>
@@ -19,6 +19,8 @@
         <TextBlock Text="Цена за месяц*" Margin="0 10 0 0"/>
         <TextBox Name="PriceTb" Margin="0 5" Height="30"/>
 
-        <Button Content="Добавить" Click="Button_Click" Margin="0 20" Padding="5 5"/>
+        <Button Content="Загрузить фото" Height="60" Name="AddPhoto" Click="AddPhoto_Click" Margin="0 20" Padding="5 5" />
+        <Button Content="Добавить"  Height="60" Click="Button_Click" Margin="0 20" Padding="5 5"/>
+        
     </StackPanel>
 </Window>

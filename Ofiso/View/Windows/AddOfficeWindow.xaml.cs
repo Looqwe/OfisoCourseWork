@@ -1,8 +1,10 @@
-﻿using Ofiso.AppData;
+﻿using Microsoft.Win32;
+using Ofiso.AppData;
 using Ofiso.Models;
 using Ofiso.View.Pages;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,6 +68,22 @@ namespace Ofiso.View.Windows
             {
                 MessageBox.Show($"Ошибка: {ex.Message}");
             }
+        }
+
+        Offices offices = new Offices();
+
+        private void AddPhoto_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.ShowDialog();
+
+            foreach (var photo in fileDialog.FileNames)
+            {
+                offices.Photo = File.ReadAllBytes(photo);
+                App.context.Offices.Add(offices);
+
+            }
+            MessageBox.Show("Фотография добавлена");
         }
     }
 }

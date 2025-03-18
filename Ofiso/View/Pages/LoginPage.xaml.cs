@@ -1,8 +1,10 @@
 ﻿using Ofiso.AppData;
+using Ofiso.Models;
 using Ofiso.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,6 +38,7 @@ namespace Ofiso.View.Pages
             // Проверяем, что пользователь найден
             if (App.currentUser != null)
             {
+                AppState.CurrentUserId = App.currentUser.ID;
 
                 var mainWindow = Application.Current.MainWindow as MainWindow;
                 mainWindow?.AuthorizationPage.Navigate(new MainPage());
