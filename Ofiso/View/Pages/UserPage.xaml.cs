@@ -28,35 +28,78 @@ namespace Ofiso.View.Pages
     public partial class UserPage : Page
     {
         private Users _currentUser;
-        private static Entities context = new Entities();
+        private ObservableCollection<Offices> _userOffices = new ObservableCollection<Offices>();
+
 
         public UserPage(int userId)
         {
             InitializeComponent();
-            LoadData(userId);
+            LoadUserAndOffices(userId); // Объединяем загрузку данных
 
-        }
-        private void LoadData(int userId)
-        {
-            try
-            {
-                // Получаем конкретного пользователя по ID
-                _currentUser = context.Users
-                    .FirstOrDefault(u => u.ID == userId);
-
-                DataContext = _currentUser;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}");
-            }
         }
 
         private void ChangePass_Click(object sender, RoutedEventArgs e)
         {
 
-            new ChangePasswordWindow().ShowDialog();
+            if (_currentUser == null) return;
 
+            var changePassWindow = new ChangePasswordWindow(_currentUser.ID);
+            changePassWindow.ShowDialog();
+
+            // Обновляем данные после изменения
+            LoadUserAndOffices(_currentUser.ID);
+
+        }
+
+        private void LoadUserAndOffices(int userId)
+        {
+            try
+            {
+                using (var context = new Entities())
+                {
+                    // Загружаем пользователя с двумя коллекциями офисов
+                    _currentUser = context.Users
+                        .Include(u => u.Offices)    // Офисы, связанные через UserID
+                        .FirstOrDefault(u => u.ID == userId);
+
+                    if (_currentUser == null)
+                    {
+                        MessageBox.Show("Пользователь не найден!");
+                        return;
+                    }
+
+                    DataContext = _currentUser;
+
+                    // Объединяем обе коллекции офисов
+                    var allUserOffices = _currentUser.Offices
+                        .Concat(_currentUser.Offices)
+                        .Distinct()
+                        .ToList();
+
+                    _userOffices = new ObservableCollection<Offices>(allUserOffices);
+                    OfficesList.ItemsSource = _userOffices;
+
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}\n{ex.InnerException?.Message}");
+            }
+        }
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button == null) return;
+
+            var office = button.DataContext as Offices;
+            if (office == null) return;
+
+            var detailsWindow = new OfficeDetailsWindow(office);
+            detailsWindow.Owner = Application.Current.MainWindow;
+            detailsWindow.ShowDialog();
         }
     }
 }

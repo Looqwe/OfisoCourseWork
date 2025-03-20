@@ -16,15 +16,19 @@
         </Grid.RowDefinitions>
 
         <Grid>
+            <Border BorderBrush="#778DA9" 
+             BorderThickness="2"
+             CornerRadius="5"
+             Padding="5">
             <Grid>
                 <!--Разметка-->
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="40"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="10"/>
+
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="10"/>
                     <RowDefinition Height="50"/>
@@ -36,25 +40,89 @@
                 </Grid.RowDefinitions>
 
                 <!--Элементы-->
-                <TextBlock Text="Имя" Grid.Row="1" TextAlignment="Right"/>
-                <TextBlock Text="Телефон" Grid.Row="3" TextAlignment="Right"/>
-                <TextBlock Text="Почта" Grid.Row="5" TextAlignment="Right"/>
-                <TextBlock Text="Пароль" Grid.Row="7" TextAlignment="Right"/>
+                <TextBlock Text="Имя:"/>
+                <TextBlock Text="Телефон:" Grid.Row="2"/>
+                <TextBlock Text="Почта:" Grid.Row="4"/>
+                <TextBlock Text="Пароль" Grid.Row="6"/>
 
-                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Fname}"/>
-                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding NumberPhone}"/>
-                <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding Email}"/>
-                <Button Name="ChangePass" Click="ChangePass_Click" Height="50" Background="#1B263B" Foreground="White" Content="Сменить пароль" Grid.Row="7" Grid.Column="2"/>
+                <TextBlock Grid.Column="2" Text="{Binding Fname}" TextAlignment="Left"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding NumberPhone}" TextAlignment="Left"/>
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Email}" TextAlignment="Left"/>
+                <Button Name="ChangePass" Click="ChangePass_Click" Height="50" Background="#1B263B" Width="300"  HorizontalAlignment="Left" Foreground="White" Content="Сменить пароль" Grid.Row="6" Grid.Column="2"/>
             </Grid>
+            </Border>
         </Grid>
-     
+        
+
 
         <!-- Блок с объявлениями пользователя -->
         <ScrollViewer Grid.Row="1" Margin="0 20 0 0">
-            <StackPanel Name="StPof">
-                
+            <ItemsControl x:Name="OfficesList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White" 
+                Margin="0 0 0 15"
+                Padding="20"
+                CornerRadius="10"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
 
-            </StackPanel>
+                                <Image Source="{Binding Photo}"
+                                    Stretch="UniformToFill"
+                                    Height="150"
+                                    Width="200"/>
+
+                                <StackPanel Name="OfficesStackPanel" Grid.Column="1" Margin="20 0">
+                                    <TextBlock Text="{Binding Title}"
+                               FontSize="20"
+                               FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Address}"
+                               Margin="0 5 0 0"
+                               Foreground="#666666"/>
+                                    <TextBlock Text="{Binding Floor}"
+                               Margin="0 5 0 0"
+                               Foreground="#666666"/>
+                                    <TextBlock Text="{Binding Description}"
+                               Margin="0 10 0 0"
+                               TextWrapping="Wrap"
+                               MaxWidth="500"/>
+                                    <TextBlock Text="{Binding CreatedDate}"
+                                  Margin="0 10 0 0"
+                                  TextWrapping="Wrap"
+                                  MaxWidth="500"/>
+                                    <TextBlock Text="{Binding OfficeType, TargetNullValue='Не указано'}"
+                               Margin="0 10 0 0"
+                               TextWrapping="Wrap"
+                               MaxWidth="500"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" 
+                            
+                            VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding PricePerMont}"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="#778DA9"/>
+                                    <TextBlock Text="руб/мес"
+                               Margin="0 5 0 0"/>
+                                    <Button Content="Подробнее"
+                            Margin="0 15 0 0"
+                            Padding="20 10"
+                            Background="#778DA9"
+                            Foreground="White"
+                            Click="Button_Click"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </ScrollViewer>
     </Grid>
 </Page>

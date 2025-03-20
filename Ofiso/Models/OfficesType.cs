@@ -12,29 +12,18 @@ namespace Ofiso.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Offices
+    public partial class OfficesType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Offices()
+        public OfficesType()
         {
-            this.Rentals = new HashSet<Rentals>();
+            this.Offices = new HashSet<Offices>();
         }
     
         public int ID { get; set; }
-        public Nullable<int> OwnerID { get; set; }
-        public string Title { get; set; }
-        public string Address { get; set; }
-        public Nullable<int> Floor { get; set; }
-        public string Description { get; set; }
-        public Nullable<decimal> PricePerMont { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public string Photo { get; set; }
-        public Nullable<int> IDOfficesType { get; set; }
-        public Nullable<int> UserID { get; set; }
+        public string Type { get; set; }
     
-        public virtual OfficesType OfficesType { get; set; }
-        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Rentals> Rentals { get; set; }
+        public virtual ICollection<Offices> Offices { get; set; }
     }
 }

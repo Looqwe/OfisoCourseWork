@@ -4,15 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="15d0b03d71714010bdacc63f39419892" Name="Diagram1">
-        <EntityTypeShape EntityType="OficoModel.Offices" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="OficoModel.Rentals" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OficoModel.Users" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OficoModel.UserType" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <AssociationConnector Association="OficoModel.FK_Offices_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="OficoModel.FK_Rentals_Offices" ManuallyRouted="false" />
-        <AssociationConnector Association="OficoModel.FK_Rentals_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="OficoModel.FK_Users_UserType" ManuallyRouted="false" />
+      <Diagram DiagramId="2cdf28f3305c4c4cb99a68383ce17fdf" Name="Diagram1">
+        <EntityTypeShape EntityType="OficoModel.Offices" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="OficoModel.OfficesType" Width="1.5" PointX="3" PointY="6.125" />
+        <EntityTypeShape EntityType="OficoModel.Rentals" Width="1.5" PointX="7.5" PointY="1.5" />
+        <EntityTypeShape EntityType="OficoModel.Users" Width="1.5" PointX="3" PointY="1.5" />
+        <EntityTypeShape EntityType="OficoModel.UserType" Width="1.5" PointX="0.75" PointY="2.125" />
+        <AssociationConnector Association="OficoModel.FK_Offices_OfficesType" />
+        <AssociationConnector Association="OficoModel.FK_Offices_Users2" />
+        <AssociationConnector Association="OficoModel.FK_Rentals_Offices" />
+        <AssociationConnector Association="OficoModel.FK_Rentals_Users" />
+        <AssociationConnector Association="OficoModel.FK_Users_UserType" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

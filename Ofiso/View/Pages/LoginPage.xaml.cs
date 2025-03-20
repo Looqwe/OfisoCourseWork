@@ -32,17 +32,19 @@ namespace Ofiso.View.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             App.currentUser = App.context.Users.FirstOrDefault(user =>
-            user.NumberPhone == PhoneTb.Text &&
-            user.Password == PasswordPb.Password);
+        user.NumberPhone == PhoneTb.Text &&
+        user.Password == PasswordPb.Password);
 
-            // Проверяем, что пользователь найден
             if (App.currentUser != null)
             {
                 AppState.CurrentUserId = App.currentUser.ID;
 
                 var mainWindow = Application.Current.MainWindow as MainWindow;
-                mainWindow?.AuthorizationPage.Navigate(new MainPage());
-
+                if (mainWindow != null)
+                {
+                    // Передаем ID пользователя в конструктор MainPage
+                    mainWindow.AuthorizationPage.Navigate(new MainPage(AppState.CurrentUserId));
+                }
             }
             else
             {

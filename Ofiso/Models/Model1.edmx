@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище OficoModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище OficoModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Offices">
           <Key>
             <PropertyRef Name="ID" />
@@ -17,7 +17,16 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="PricePerMont" Type="decimal" Precision="18" Scale="0" />
           <Property Name="CreatedDate" Type="date" />
-          <Property Name="Photo" Type="binary" MaxLength="6000" />
+          <Property Name="Photo" Type="nvarchar(max)" />
+          <Property Name="IDOfficesType" Type="int" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="OfficesType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Rentals">
           <Key>
@@ -49,7 +58,19 @@
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="10" />
         </EntityType>
-        <Association Name="FK_Offices_Users">
+        <Association Name="FK_Offices_OfficesType">
+          <End Role="OfficesType" Type="Self.OfficesType" Multiplicity="0..1" />
+          <End Role="Offices" Type="Self.Offices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OfficesType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Offices">
+              <PropertyRef Name="IDOfficesType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offices_Users2">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Offices" Type="Self.Offices" Multiplicity="*" />
           <ReferentialConstraint>
@@ -57,7 +78,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Offices">
-              <PropertyRef Name="OwnerID" />
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -99,10 +120,15 @@
         </Association>
         <EntityContainer Name="Хранилище OficoModelContainer">
           <EntitySet Name="Offices" EntityType="Self.Offices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OfficesType" EntityType="Self.OfficesType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rentals" EntityType="Self.Rentals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Offices_Users" Association="Self.FK_Offices_Users">
+          <AssociationSet Name="FK_Offices_OfficesType" Association="Self.FK_Offices_OfficesType">
+            <End Role="OfficesType" EntitySet="OfficesType" />
+            <End Role="Offices" EntitySet="Offices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offices_Users2" Association="Self.FK_Offices_Users2">
             <End Role="Users" EntitySet="Users" />
             <End Role="Offices" EntitySet="Offices" />
           </AssociationSet>
@@ -119,11 +145,37 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OficoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Offices" EntityType="OficoModel.Offices" />
+          <EntitySet Name="OfficesType" EntityType="OficoModel.OfficesType" />
+          <EntitySet Name="Rentals" EntityType="OficoModel.Rentals" />
+          <EntitySet Name="Users" EntityType="OficoModel.Users" />
+          <EntitySet Name="UserType" EntityType="OficoModel.UserType" />
+          <AssociationSet Name="FK_Offices_OfficesType" Association="OficoModel.FK_Offices_OfficesType">
+            <End Role="OfficesType" EntitySet="OfficesType" />
+            <End Role="Offices" EntitySet="Offices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Offices_Users2" Association="OficoModel.FK_Offices_Users2">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Offices" EntitySet="Offices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_Offices" Association="OficoModel.FK_Rentals_Offices">
+            <End Role="Offices" EntitySet="Offices" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rentals_Users" Association="OficoModel.FK_Rentals_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_UserType" Association="OficoModel.FK_Users_UserType">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Offices">
           <Key>
             <PropertyRef Name="ID" />
@@ -136,9 +188,20 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PricePerMont" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="CreatedDate" Type="DateTime" Precision="0" />
-          <Property Name="Photo" Type="Binary" MaxLength="6000" FixedLength="true" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Offices_Users" FromRole="Offices" ToRole="Users" />
-          <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_Offices" FromRole="Offices" ToRole="Rentals" />
+          <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IDOfficesType" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="OfficesType" Relationship="OficoModel.FK_Offices_OfficesType" FromRole="Offices" ToRole="OfficesType" />
+          <NavigationProperty Name="Users" Relationship="OficoModel.FK_Offices_Users2" FromRole="Offices" ToRole="Users" />
+          <NavigationProperty Name="Rentals" Relationship="OficoModel.FK_Rentals_Offices" FromRole="Offices" ToRole="Rentals" />
+        </EntityType>
+        <EntityType Name="OfficesType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Offices" Relationship="OficoModel.FK_Offices_OfficesType" FromRole="OfficesType" ToRole="Offices" />
         </EntityType>
         <EntityType Name="Rentals">
           <Key>
@@ -151,8 +214,8 @@
           <Property Name="EndDate" Type="DateTime" Precision="0" />
           <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Offices" Relationship="Self.FK_Rentals_Offices" FromRole="Rentals" ToRole="Offices" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Rentals_Users" FromRole="Rentals" ToRole="Users" />
+          <NavigationProperty Name="Offices" Relationship="OficoModel.FK_Rentals_Offices" FromRole="Rentals" ToRole="Offices" />
+          <NavigationProperty Name="Users" Relationship="OficoModel.FK_Rentals_Users" FromRole="Rentals" ToRole="Users" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -164,9 +227,9 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserType" Type="Int32" />
-          <NavigationProperty Name="Offices" Relationship="Self.FK_Offices_Users" FromRole="Users" ToRole="Offices" />
-          <NavigationProperty Name="Rentals" Relationship="Self.FK_Rentals_Users" FromRole="Users" ToRole="Rentals" />
-          <NavigationProperty Name="UserType1" Relationship="Self.FK_Users_UserType" FromRole="Users" ToRole="UserType" />
+          <NavigationProperty Name="Offices" Relationship="OficoModel.FK_Offices_Users2" FromRole="Users" ToRole="Offices" />
+          <NavigationProperty Name="Rentals" Relationship="OficoModel.FK_Rentals_Users" FromRole="Users" ToRole="Rentals" />
+          <NavigationProperty Name="UserType1" Relationship="OficoModel.FK_Users_UserType" FromRole="Users" ToRole="UserType" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
@@ -174,23 +237,35 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Users" Relationship="Self.FK_Users_UserType" FromRole="UserType" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="OficoModel.FK_Users_UserType" FromRole="UserType" ToRole="Users" />
         </EntityType>
-        <Association Name="FK_Offices_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="Offices" Type="Self.Offices" Multiplicity="*" />
+        <Association Name="FK_Offices_OfficesType">
+          <End Type="OficoModel.OfficesType" Role="OfficesType" Multiplicity="0..1" />
+          <End Type="OficoModel.Offices" Role="Offices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OfficesType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Offices">
+              <PropertyRef Name="IDOfficesType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Offices_Users2">
+          <End Type="OficoModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="OficoModel.Offices" Role="Offices" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Offices">
-              <PropertyRef Name="OwnerID" />
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_Offices">
-          <End Role="Offices" Type="Self.Offices" Multiplicity="0..1" />
-          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
+          <End Type="OficoModel.Offices" Role="Offices" Multiplicity="0..1" />
+          <End Type="OficoModel.Rentals" Role="Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Offices">
               <PropertyRef Name="ID" />
@@ -201,8 +276,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Rentals_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="Rentals" Type="Self.Rentals" Multiplicity="*" />
+          <End Type="OficoModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="OficoModel.Rentals" Role="Rentals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="ID" />
@@ -213,8 +288,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_UserType">
-          <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <End Type="OficoModel.UserType" Role="UserType" Multiplicity="0..1" />
+          <End Type="OficoModel.Users" Role="Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserType">
               <PropertyRef Name="ID" />
@@ -224,29 +299,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Offices" EntityType="Self.Offices" />
-          <EntitySet Name="Rentals" EntityType="Self.Rentals" />
-          <EntitySet Name="Users" EntityType="Self.Users" />
-          <EntitySet Name="UserType" EntityType="Self.UserType" />
-          <AssociationSet Name="FK_Offices_Users" Association="Self.FK_Offices_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Offices" EntitySet="Offices" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_Offices" Association="Self.FK_Rentals_Offices">
-            <End Role="Offices" EntitySet="Offices" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Rentals_Users" Association="Self.FK_Rentals_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Rentals" EntitySet="Rentals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_UserType" Association="Self.FK_Users_UserType">
-            <End Role="UserType" EntitySet="UserType" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -255,48 +308,58 @@
           <EntitySetMapping Name="Offices">
             <EntityTypeMapping TypeName="OficoModel.Offices">
               <MappingFragment StoreEntitySet="Offices">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Floor" ColumnName="Floor" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="PricePerMont" ColumnName="PricePerMont" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="IDOfficesType" ColumnName="IDOfficesType" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="PricePerMont" ColumnName="PricePerMont" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Floor" ColumnName="Floor" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OfficesType">
+            <EntityTypeMapping TypeName="OficoModel.OfficesType">
+              <MappingFragment StoreEntitySet="OfficesType">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Rentals">
             <EntityTypeMapping TypeName="OficoModel.Rentals">
               <MappingFragment StoreEntitySet="Rentals">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="OfficeID" ColumnName="OfficeID" />
-                <ScalarProperty Name="TenantID" ColumnName="TenantID" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="TenantID" ColumnName="TenantID" />
+                <ScalarProperty Name="OfficeID" ColumnName="OfficeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="OficoModel.Users">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Fname" ColumnName="Fname" />
-                <ScalarProperty Name="NumberPhone" ColumnName="NumberPhone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NumberPhone" ColumnName="NumberPhone" />
+                <ScalarProperty Name="Fname" ColumnName="Fname" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserType">
             <EntityTypeMapping TypeName="OficoModel.UserType">
               <MappingFragment StoreEntitySet="UserType">
-                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

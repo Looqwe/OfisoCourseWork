@@ -26,6 +26,7 @@ namespace Ofiso.Models
         }
     
         public virtual DbSet<Offices> Offices { get; set; }
+        public virtual DbSet<OfficesType> OfficesType { get; set; }
         public virtual DbSet<Rentals> Rentals { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserType> UserType { get; set; }

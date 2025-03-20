@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.Entity;
 
 namespace Ofiso.View.Pages
 {
@@ -28,11 +29,12 @@ namespace Ofiso.View.Pages
         private string _currentSearch = "";
         private string _currentTypeFilter = "Все типы";
         private decimal _currentPriceFilter = 50000;
+        private int _currentUserId; // Добавляем поле для хранения ID
 
-
-        public MainPage()
+        public MainPage(int userId)
         {
             InitializeComponent();
+            _currentUserId = userId; // Сохраняем ID пользователя
             LoadDataFromDatabase(); // Сначала загрузка данных
             ApplyFilters(); // Затем применение фильтров
 
@@ -58,13 +60,17 @@ namespace Ofiso.View.Pages
             {
                 using (var context = new Entities())
                 {
-                    _allOffices = new ObservableCollection<Offices>(context.Offices.ToList());
-                    ApplyFilters();
+                    // Используйте правильное название навигационного свойства
+                    _allOffices = new ObservableCollection<Offices>(context.Offices
+                        .Include(o => o.Users) // Обычно называется во множественном числе
+                        .ToList());
+
+                    OfficesList.ItemsSource = _allOffices;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка загрузки: {ex.Message}");
+                MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }
 
@@ -81,14 +87,7 @@ namespace Ofiso.View.Pages
                 ApplyFilters();
             }
 
-            private void TypeFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
-            {
-                if (TypeFilterComboBox.SelectedItem is ComboBoxItem selectedItem)
-                {
-                    _currentTypeFilter = selectedItem.Content.ToString();
-                    ApplyFilters();
-                }
-            }
+           
 
             private void DetailsButton_Click(object sender, RoutedEventArgs e)
             {
@@ -98,10 +97,9 @@ namespace Ofiso.View.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var addWindow = new AddOfficeWindow();
+            var addWindow = new AddOfficeWindow(_currentUserId); // Используем сохраненный ID
             if (addWindow.ShowDialog() == true)
             {
-                // Перезагружаем данные после добавления
                 LoadDataFromDatabase();
                 ApplyFilters();
             }
@@ -115,9 +113,19 @@ namespace Ofiso.View.Pages
 
         private void ResetFilter_Click(object sender, RoutedEventArgs e)
         {
-            TypeFilterComboBox.SelectedIndex = 0;
-            PriceSlider.Value = 50000;
+            // Сбрасываем значение слайдера
+             PriceSlider.Value = 50000;
+
+            // Сбрасываем текстовый поиск
             SearchTextBox.Clear();
+
+            // Принудительно обновляем фильтры
+            _currentPriceFilter = 50000;
+            _currentSearch = "";
+            _currentTypeFilter = "Все типы";
+
+            ApplyFilters();
+            UpdatePriceText();
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
@@ -127,8 +135,17 @@ namespace Ofiso.View.Pages
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            var button = sender as Button;
+            if (button == null) return;
 
+            var office = button.DataContext as Offices;
+            if (office == null) return;
+
+            var detailsWindow = new OfficeDetailsWindow(office);
+            detailsWindow.Owner = Application.Current.MainWindow;
+            detailsWindow.ShowDialog();
         }
+
     }
 }
 

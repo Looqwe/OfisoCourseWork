@@ -54,7 +54,8 @@ namespace Ofiso.View.Windows
                 return;
             }
 
-            FrameHelper.mainFrame.Navigate(new MainPage());
+            // Передаем ID пользователя в конструктор MainPage
+            FrameHelper.mainFrame.Navigate(new MainPage(AppState.CurrentUserId));
         }
     }
 }

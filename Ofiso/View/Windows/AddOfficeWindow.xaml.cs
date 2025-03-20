@@ -24,67 +24,64 @@ namespace Ofiso.View.Windows
     /// </summary>
     public partial class AddOfficeWindow : Window
     {
-        public AddOfficeWindow()
+        private readonly Entities _context = new Entities();
+        private readonly int _currentUserId;
+
+        public AddOfficeWindow(int userId)
         {
             InitializeComponent();
+            _currentUserId = userId;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            
             AddOffice();
+
         }
 
         public void AddOffice()
         {
+            // Проверка обязательных полей
             if (string.IsNullOrWhiteSpace(TitleTb.Text) ||
                 string.IsNullOrWhiteSpace(AddressTb.Text) ||
-                string.IsNullOrWhiteSpace(FloorTb.Text) ||
-                string.IsNullOrWhiteSpace(DescriptionTb.Text) ||
-                string.IsNullOrWhiteSpace(PriceTb.Text)
-                )
+                string.IsNullOrWhiteSpace(PriceTb.Text))
             {
-                MessageBox.Show("Все поля должны быть заполнены!");
+                MessageBox.Show("Заполните все обязательные поля!");
                 return;
             }
 
             try
             {
-                Offices newOff = new Offices()
+                // Создание нового объекта
+                var newOffice = new Offices
                 {
-                    Title = TitleTb.Text, // Заголовок из TextBox
-                    Address = AddressTb.Text, // Адрес из TextBox
-                    Floor = int.TryParse(FloorTb.Text, out int floor) ? floor : (int?)null, // Этаж (с проверкой на число)
-                    Description = DescriptionTb.Text, // Описание
-                    PricePerMont = decimal.Parse(PriceTb.Text), // Цена (обязательное поле)
-                    CreatedDate = DateTime.Now, // Текущая дата (устанавливается автоматически)
+                    Title = TitleTb.Text,
+                    Address = AddressTb.Text,
+                    Floor = int.TryParse(FloorTb.Text, out int floor) ? floor : (int?)null,
+                    Description = DescriptionTb.Text,
+                    PricePerMont = decimal.Parse(PriceTb.Text),
+                    CreatedDate = DateTime.Now,
+                    Photo = PhotoTb.Text,
+                    UserID = _currentUserId
                 };
 
-                App.context.Offices.Add(newOff);
-                App.context.SaveChanges();
-                MessageBox.Show("Объявление добавлено!");
+                // Добавление в контекст
+                _context.Offices.Add(newOffice);
 
+                // Сохранение изменений
+                _context.SaveChanges();
+
+                MessageBox.Show("Офис успешно добавлен!");
+                this.DialogResult = true;
+                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}");
+                MessageBox.Show($"Ошибка: {ex.Message}\n{(ex.InnerException?.Message ?? "")}");
             }
         }
 
-        Offices offices = new Offices();
-
-        private void AddPhoto_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.ShowDialog();
-
-            foreach (var photo in fileDialog.FileNames)
-            {
-                offices.Photo = File.ReadAllBytes(photo);
-                App.context.Offices.Add(offices);
-
-            }
-            MessageBox.Show("Фотография добавлена");
-        }
     }
 }
 

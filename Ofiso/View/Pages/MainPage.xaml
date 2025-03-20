@@ -46,17 +46,6 @@
 
             <!-- Фильтры -->
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0 0 0 20">
-                <ComboBox Name="TypeFilterComboBox" Margin="0 0 10 0"
-                     Width="200"
-                     Padding="10"
-                     SelectedIndex="0"
-                     Background="White"
-                     BorderBrush="#778DA9">
-                    <ComboBoxItem Content="Все типы"/>
-                    <ComboBoxItem Content="Открытые офисы"/>
-                    <ComboBoxItem Content="Кабинеты"/>
-                    <ComboBoxItem Content="Конференц-залы"/>
-                </ComboBox>
 
                 <Slider Name="PriceSlider" Width="200" 
                     Margin="0 0 10 0"
@@ -110,10 +99,14 @@
                                         <TextBlock Text="{Binding Address}"
                                               Margin="0 5 0 0"
                                               Foreground="#666666"/>
-                                        <TextBlock Text="{Binding Floor}"
+                                        <TextBlock Text="{Binding Floor, StringFormat='Этаж: {0}'}"
                                               Margin="0 5 0 0"
                                               Foreground="#666666"/>
                                         <TextBlock Text="{Binding Description}"
+                                              Margin="0 10 0 0"
+                                              TextWrapping="Wrap"
+                                              MaxWidth="500"/>
+                                        <TextBlock Text="{Binding CreatedDate, StringFormat='{}{0:dd.MM.yyyy}'}"
                                               Margin="0 10 0 0"
                                               TextWrapping="Wrap"
                                               MaxWidth="500"/>
