@@ -1,0 +1,120 @@
+﻿<Page x:Class="Ofiso.View.Pages.AdminPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Ofiso.View.Pages"
+      xmlns:converters="clr-namespace:Ofiso.AppData"
+      mc:Ignorable="d"
+      Title="Административная панель"
+      MinWidth="960" MaxWidth="1260" 
+      MinHeight="560" MaxHeight="560"
+      Background="#F5F5F5">
+
+    <Page.Resources>
+        <converters:OfficesConverter x:Key="OfficesConverter"/>
+
+        <!-- Добавьте стиль для кнопок -->
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Padding" Value="15 8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" Opacity="0.2" ShadowDepth="3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- Стиль для внутреннего контейнера -->
+        <Style TargetType="Border" x:Key="CardStyle">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Width" Value="1260"/>
+        </Style>
+        <!-- Стиль для карточек -->
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Width" Value="800"/>
+            <!-- Фиксированная ширина -->
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="0 0 0 15"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+
+        <ScrollViewer Padding="20">
+            <ListBox x:Name="UsersList" ItemsSource="{Binding}" BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White" 
+                                Padding="20"
+                                CornerRadius="12"
+                                BorderBrush="#E0E0E0"
+                                BorderThickness="1">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Аватар пользователя -->
+                                <Border Width="80" Height="80" CornerRadius="40"
+                                    Background="#778DA9" Margin="0 0 20 0">
+                                    <TextBlock Text="{Binding Fname}"
+                                           Foreground="White" FontSize="10"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Основная информация -->
+                                <StackPanel Grid.Column="1" Margin="10 0">
+                                    <TextBlock Text="{Binding Fname}" 
+                                           FontSize="18" FontWeight="Bold"/>
+
+                                    <Grid Margin="0 10 0 0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel>
+                                            <TextBlock Text="Телефон:" Foreground="#666"/>
+                                            <TextBlock Text="Email:" Foreground="#666" Margin="0 5 0 0"/>
+                                            <TextBlock Text="Офисы:" Foreground="#666" Margin="0 5 0 0"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="{Binding NumberPhone}" Foreground="#444"/>
+                                            <TextBlock Text="{Binding Email}" Foreground="#444" Margin="0 5 0 0"/>
+                                            <TextBlock Text="{Binding Offices, Converter={StaticResource OfficesConverter}}" 
+                                                   Foreground="#444" Margin="0 5 0 0"
+                                                   TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- Кнопки действий -->
+                                <StackPanel Grid.Column="2" VerticalAlignment="Center"
+                                        Margin="20 0 0 0">
+                                    <Button Name="DeleteUser" Content="Удалить" Background="LightSteelBlue" Click="DeleteUser_Click_1"
+                                        Margin="0 0 0 10"/>
+
+                                    <Button x:Name="ChangePassword" Content="Сменить пароль" Background="#778DA9"
+                                        Click="ChangePassword_Click_1"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+    </Grid>
+</Page>

@@ -97,9 +97,11 @@ namespace Ofiso.View.Pages
             var office = button.DataContext as Offices;
             if (office == null) return;
 
-            var detailsWindow = new OfficeDetailsWindow(office);
+            var detailsWindow = new OfficeDetailsUserWindow(office);
+            detailsWindow.DataUpdated += () => LoadUserAndOffices(_currentUser.ID); // Подписываемся на обновление
             detailsWindow.Owner = Application.Current.MainWindow;
             detailsWindow.ShowDialog();
         }
+
     }
 }

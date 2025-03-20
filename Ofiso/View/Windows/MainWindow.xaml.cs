@@ -57,5 +57,13 @@ namespace Ofiso.View.Windows
             // Передаем ID пользователя в конструктор MainPage
             FrameHelper.mainFrame.Navigate(new MainPage(AppState.CurrentUserId));
         }
+        public void UpdateAdminVisibility()
+        {
+            AdminButton.Visibility = App.IsAdmin ? Visibility.Visible : Visibility.Collapsed;
+        }
+        private void AdminButton_Click(object sender, RoutedEventArgs e)
+        {
+            FrameHelper.mainFrame.Navigate(new AdminPage());
+        }
     }
 }

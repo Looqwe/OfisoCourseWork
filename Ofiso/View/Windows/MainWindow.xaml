@@ -46,6 +46,17 @@
                 Click="btnhome_Click">
                 <Image Source="C:\Users\ADMIN\Documents\repos\Ofiso\Ofiso\Photo\free-icon-home-1946488.png"/>
             </Button>
+            <Button Content="AD"
+                    Background="White"
+                    x:Name="AdminButton" 
+                    Width="40" 
+                    Height="40" 
+                    Margin="0,0,140,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"           
+                    Click="AdminButton_Click" 
+                    Visibility="Collapsed">
+            </Button>
         </Grid>
 
     </Grid>

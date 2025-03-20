@@ -18,5 +18,8 @@ namespace Ofiso
         public static Entities context = new Entities();
 
         public static Users currentUser;
+        public static bool IsAdmin { get; set; }
+
+
     }
 }

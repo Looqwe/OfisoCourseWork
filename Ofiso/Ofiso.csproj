@@ -71,6 +71,8 @@
     <Compile Include="AppData\AppState.cs" />
     <Compile Include="AppData\Config.cs" />
     <Compile Include="AppData\FrameHelper.cs" />
+    <Compile Include="AppData\InitialsConverter.cs" />
+    <Compile Include="AppData\OfficesConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Models\Model1.Context.cs">
       <AutoGen>True</AutoGen>
@@ -102,6 +104,9 @@
     <Compile Include="Models\UserType.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\AuthorizationPage.xaml.cs">
       <DependentUpon>AuthorizationPage.xaml</DependentUpon>
     </Compile>
@@ -120,11 +125,17 @@
     <Compile Include="View\Windows\AddOfficeWindow.xaml.cs">
       <DependentUpon>AddOfficeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\ChangePasswordAdminWindow.xaml.cs">
+      <DependentUpon>ChangePasswordAdminWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\ChangePasswordWindow.xaml.cs">
       <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\OfficeDetailsUserWindow.xaml.cs">
+      <DependentUpon>OfficeDetailsUserWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\OfficeDetailsWindow.xaml.cs">
       <DependentUpon>OfficeDetailsWindow.xaml</DependentUpon>
@@ -134,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\TextBlockStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\AdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,11 +176,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Windows\ChangePasswordAdminWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Windows\ChangePasswordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\OfficeDetailsUserWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

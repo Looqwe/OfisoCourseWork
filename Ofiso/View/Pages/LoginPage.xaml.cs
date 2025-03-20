@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.Entity;
 
 namespace Ofiso.View.Pages
 {
@@ -31,18 +32,29 @@ namespace Ofiso.View.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            App.currentUser = App.context.Users.FirstOrDefault(user =>
-        user.NumberPhone == PhoneTb.Text &&
-        user.Password == PasswordPb.Password);
+            // Загружаем пользователя с типом
+            App.currentUser = App.context.Users
+                .Include(u => u.UserType1)  // Важно: добавляем загрузку типа
+                .FirstOrDefault(user =>
+                    user.NumberPhone == PhoneTb.Text &&
+                    user.Password == PasswordPb.Password);
 
             if (App.currentUser != null)
             {
+                // Проверка прав администратора
+                if (App.currentUser.UserType1?.Type == "Admin")
+                {
+                    // Сохраняем флаг администратора
+                    App.IsAdmin = true;
+                }
+
                 AppState.CurrentUserId = App.currentUser.ID;
 
                 var mainWindow = Application.Current.MainWindow as MainWindow;
                 if (mainWindow != null)
                 {
-                    // Передаем ID пользователя в конструктор MainPage
+                    // Обновляем интерфейс
+                    mainWindow.UpdateAdminVisibility();
                     mainWindow.AuthorizationPage.Navigate(new MainPage(AppState.CurrentUserId));
                 }
             }
@@ -51,7 +63,6 @@ namespace Ofiso.View.Pages
                 MessageBox.Show("Неверный номер телефона или пароль!");
             }
         }
-        
-        
+       
     }
 }

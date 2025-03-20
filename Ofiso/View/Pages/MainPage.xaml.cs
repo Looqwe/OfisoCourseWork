@@ -40,8 +40,7 @@ namespace Ofiso.View.Pages
 
         }
 
-        
-        
+
         private void ApplyFilters()
         {
             var filtered = _allOffices

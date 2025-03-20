@@ -8,64 +8,114 @@
       Title="Личный кабинет"
       FontFamily="Segoe UI">
 
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#444"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#778DA9"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="15 8"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="6" Opacity="0.2" ShadowDepth="3"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DropShadowEffect x:Key="CardShadow" 
+                          BlurRadius="12" 
+                          Opacity="0.1" 
+                          ShadowDepth="4"/>
+    </Page.Resources>
+
     <Grid Margin="20">
-        <!--Разметка-->
         <Grid.RowDefinitions>
-            <RowDefinition Height="250"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid>
-            <Border BorderBrush="#778DA9" 
-             BorderThickness="2"
-             CornerRadius="5"
-             Padding="5">
+        <!-- Профиль пользователя -->
+        <Border Background="White"
+                CornerRadius="8"
+                Padding="20"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1"
+                Effect="{StaticResource CardShadow}">
+
             <Grid>
-                <!--Разметка-->
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="40"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
 
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="10"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="10"/>
-                </Grid.RowDefinitions>
+                <!-- Аватар -->
+                <Border Width="80" 
+                        Height="80" 
+                        CornerRadius="40"
+                        Background="#778DA9"
+                        VerticalAlignment="Top">
+                    <TextBlock Text="{Binding Fname}"
+                               Foreground="White"
+                               FontSize="10"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
+                </Border>
 
-                <!--Элементы-->
-                <TextBlock Text="Имя:"/>
-                <TextBlock Text="Телефон:" Grid.Row="2"/>
-                <TextBlock Text="Почта:" Grid.Row="4"/>
-                <TextBlock Text="Пароль" Grid.Row="6"/>
+                <!-- Информация -->
+                <StackPanel Grid.Column="1" Margin="20 0 0 0">
+                    <TextBlock Text="{Binding Fname}" 
+                               FontSize="20" 
+                               FontWeight="Bold"
+                               Foreground="#1B263B"/>
 
-                <TextBlock Grid.Column="2" Text="{Binding Fname}" TextAlignment="Left"/>
-                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding NumberPhone}" TextAlignment="Left"/>
-                <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Email}" TextAlignment="Left"/>
-                <Button Name="ChangePass" Click="ChangePass_Click" Height="50" Background="#1B263B" Width="300"  HorizontalAlignment="Left" Foreground="White" Content="Сменить пароль" Grid.Row="6" Grid.Column="2"/>
+                    <Grid Margin="0 15 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel>
+                            <TextBlock Text="Телефон:" Foreground="#666"/>
+                            <TextBlock Text="Email:" Foreground="#666" Margin="0 8 0 0"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="{Binding NumberPhone}" Foreground="#444"/>
+                            <TextBlock Text="{Binding Email}" Foreground="#444" Margin="0 8 0 0"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Button Content="Сменить пароль" 
+                            Margin="0 20 0 0"
+                            Click="ChangePass_Click"
+                            Width="200"
+                            HorizontalAlignment="Left"/>
+                </StackPanel>
             </Grid>
-            </Border>
-        </Grid>
-        
+        </Border>
 
+        <!-- Список офисов -->
+        <ScrollViewer Grid.Row="1" 
+                      Margin="0 20 0 0" 
+                      VerticalScrollBarVisibility="Auto">
 
-        <!-- Блок с объявлениями пользователя -->
-        <ScrollViewer Grid.Row="1" Margin="0 20 0 0">
             <ItemsControl x:Name="OfficesList">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Background="White" 
-                Margin="0 0 0 15"
-                Padding="20"
-                CornerRadius="10"
-                BorderBrush="#E0E0E0"
-                BorderThickness="1">
+                                Margin="0 0 0 15"
+                                Padding="20"
+                                CornerRadius="8"
+                                BorderBrush="#E0E0E0"
+                                BorderThickness="1"
+                                Effect="{StaticResource CardShadow}">
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="200"/>
@@ -73,50 +123,51 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Image Source="{Binding Photo}"
-                                    Stretch="UniformToFill"
-                                    Height="150"
-                                    Width="200"/>
+                                <!-- Изображение -->
+                                <Border CornerRadius="4"
+                                        Background="#EEE">
+                                    <Image Source="{Binding Photo}"
+                                           Stretch="UniformToFill"
+                                           Height="150"/>
+                                </Border>
 
-                                <StackPanel Name="OfficesStackPanel" Grid.Column="1" Margin="20 0">
+                                <!-- Информация -->
+                                <StackPanel Grid.Column="1" Margin="20 0">
                                     <TextBlock Text="{Binding Title}"
-                               FontSize="20"
-                               FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding Address}"
-                               Margin="0 5 0 0"
-                               Foreground="#666666"/>
-                                    <TextBlock Text="{Binding Floor}"
-                               Margin="0 5 0 0"
-                               Foreground="#666666"/>
+                                               FontSize="18"
+                                               FontWeight="Bold"/>
+
+                                    <StackPanel Margin="0 10 0 0">
+                                        <TextBlock Text="{Binding Address}"
+                                                   Foreground="#666"/>
+                                        <TextBlock Text="{Binding Floor, StringFormat='Этаж: {0}'}"
+                                                   Foreground="#666"
+                                                   Margin="0 5 0 0"/>
+                                    </StackPanel>
+
                                     <TextBlock Text="{Binding Description}"
-                               Margin="0 10 0 0"
-                               TextWrapping="Wrap"
-                               MaxWidth="500"/>
-                                    <TextBlock Text="{Binding CreatedDate}"
-                                  Margin="0 10 0 0"
-                                  TextWrapping="Wrap"
-                                  MaxWidth="500"/>
-                                    <TextBlock Text="{Binding OfficeType, TargetNullValue='Не указано'}"
-                               Margin="0 10 0 0"
-                               TextWrapping="Wrap"
-                               MaxWidth="500"/>
+                                               Margin="0 15 0 0"
+                                               Foreground="#444"
+                                               TextWrapping="Wrap"
+                                               MaxWidth="500"/>
                                 </StackPanel>
 
+                                <!-- Цена -->
                                 <StackPanel Grid.Column="2" 
-                            
-                            VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding PricePerMont}"
-                               FontSize="24"
-                               FontWeight="Bold"
-                               Foreground="#778DA9"/>
-                                    <TextBlock Text="руб/мес"
-                               Margin="0 5 0 0"/>
-                                    <Button Content="Подробнее"
-                            Margin="0 15 0 0"
-                            Padding="20 10"
-                            Background="#778DA9"
-                            Foreground="White"
-                            Click="Button_Click"/>
+                                            VerticalAlignment="Center"
+                                            Margin="20 0 0 0">
+                                    <TextBlock Text="{Binding PricePerMont, StringFormat='{}₽{0:N0}'}"
+                                               FontSize="24"
+                                               FontWeight="Bold"
+                                               Foreground="#778DA9"/>
+                                    <TextBlock Text="в месяц"
+                                               Foreground="#666"
+                                               Margin="0 5 0 0"/>
+
+                                    <Button Content="Управление"
+                                            Margin="0 15 0 0"
+                                            Padding="20 10"
+                                            Click="Button_Click"/>
                                 </StackPanel>
                             </Grid>
                         </Border>

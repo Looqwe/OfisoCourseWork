@@ -82,6 +82,18 @@ namespace Ofiso.View.Windows
             }
         }
 
+        private void BrowseButton_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "Image files (*.jpg, *.png)|*.jpg;*.png"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                PhotoTb.Text = openFileDialog.FileName;
+            }
+        }
     }
 }
 
