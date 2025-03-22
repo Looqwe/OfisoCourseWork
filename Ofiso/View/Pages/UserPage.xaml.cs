@@ -103,5 +103,13 @@ namespace Ofiso.View.Pages
             detailsWindow.ShowDialog();
         }
 
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            // Очистить данные
+            _currentUser = null;
+            _userOffices.Clear();
+            FrameHelper.mainFrame.Navigate(new AuthorizationPage());
+        }
     }
 }

@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Ofiso.View.Pages"
-      MinWidth="960" MaxWidth="960" MinHeight="560" MaxHeight="560"
+      MinWidth="960" MaxWidth="1060" MinHeight="560" MaxHeight="560"
       Title="Личный кабинет"
       FontFamily="Segoe UI">
 
@@ -96,6 +96,13 @@
                             Click="ChangePass_Click"
                             Width="200"
                             HorizontalAlignment="Left"/>
+                    
+                    <Button Content="Выйти" 
+                            Margin="0 10 0 0"
+                            Click="LogoutButton_Click"
+                            Width="200"
+                            HorizontalAlignment="Left"
+                            Name="LogoutButton"/>
                 </StackPanel>
             </Grid>
         </Border>
