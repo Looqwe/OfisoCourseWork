@@ -109,6 +109,8 @@ namespace Ofiso.View.Pages
             // Очистить данные
             _currentUser = null;
             _userOffices.Clear();
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.SetBackButtonVisibility(true);
             FrameHelper.mainFrame.Navigate(new AuthorizationPage());
         }
     }

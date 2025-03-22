@@ -9,6 +9,7 @@ namespace Ofiso.AppData
         public static class AppState
         {
             public static int CurrentUserId { get; set; }
+            public static bool IsAuthenticated => CurrentUserId != 0;
         }
     
 }

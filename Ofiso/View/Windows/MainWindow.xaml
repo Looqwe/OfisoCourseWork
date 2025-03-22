@@ -21,7 +21,8 @@
         </Grid.RowDefinitions>
 
         <Frame Name="AuthorizationPage" Grid.Row="1"
-         NavigationUIVisibility="Hidden" Navigated="AuthorizationPage_Navigated" Grid.ColumnSpan="2"/>
+         NavigationUIVisibility="Hidden" Navigated="AuthorizationPage_Navigated" Grid.ColumnSpan="2"
+         JournalOwnership="OwnsJournal"/>
 
         <Grid Name="Top" Background="#778DA9" Grid.ColumnSpan="2">
             <Button 
@@ -56,6 +57,18 @@
                     VerticalAlignment="Center"           
                     Click="AdminButton_Click" 
                     Visibility="Collapsed">
+            </Button>
+            <Button
+                    Background="White"
+                    x:Name="BackBtn" 
+                    Width="40" 
+                    Height="40" 
+                    Margin="20,0,40,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"           
+                    Click="BackBtn_Click">
+                    <Image Source="C:\Users\ADMIN\Documents\repos\Ofiso\Ofiso\Photo\leftarrow_121320.png"/>
+                     
             </Button>
         </Grid>
 

@@ -32,19 +32,17 @@ namespace Ofiso.View.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Загружаем пользователя с типом
             App.currentUser = App.context.Users
-                .Include(u => u.UserType1)  // Важно: добавляем загрузку типа
-                .FirstOrDefault(user =>
-                    user.NumberPhone == PhoneTb.Text &&
-                    user.Password == PasswordPb.Password);
+         .Include(u => u.UserType1)
+         .FirstOrDefault(user =>
+             user.NumberPhone == PhoneTb.Text &&
+             user.Password == PasswordPb.Password);
 
             if (App.currentUser != null)
             {
                 // Проверка прав администратора
                 if (App.currentUser.UserType1?.Type == "Admin")
                 {
-                    // Сохраняем флаг администратора
                     App.IsAdmin = true;
                 }
 
@@ -53,6 +51,9 @@ namespace Ofiso.View.Pages
                 var mainWindow = Application.Current.MainWindow as MainWindow;
                 if (mainWindow != null)
                 {
+                    // Скрываем кнопку "Назад"
+                    mainWindow.SetBackButtonVisibility(false);
+
                     // Обновляем интерфейс
                     mainWindow.UpdateAdminVisibility();
                     mainWindow.AuthorizationPage.Navigate(new MainPage(AppState.CurrentUserId));
@@ -62,6 +63,34 @@ namespace Ofiso.View.Pages
             {
                 MessageBox.Show("Неверный номер телефона или пароль!");
             }
+            App.currentUser = App.context.Users
+            .Include(u => u.UserType1)
+            .FirstOrDefault(user =>
+            user.NumberPhone == PhoneTb.Text &&
+            user.Password == PasswordPb.Password);
+
+            if (App.currentUser != null)
+            {
+                // Проверка прав администратора
+                if (App.currentUser.UserType1?.Type == "Admin")
+                {
+                    App.IsAdmin = true;
+                }
+
+                AppState.CurrentUserId = App.currentUser.ID;
+
+                var mainWindow = Application.Current.MainWindow as MainWindow;
+                if (mainWindow != null)
+                {
+                    // Скрываем кнопку "Назад"
+                    mainWindow.SetBackButtonVisibility(false);
+
+                    // Обновляем интерфейс
+                    mainWindow.UpdateAdminVisibility();
+                    mainWindow.AuthorizationPage.Navigate(new MainPage(AppState.CurrentUserId));
+                }
+            }
+            
         }
        
     }

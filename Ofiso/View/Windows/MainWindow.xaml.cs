@@ -32,7 +32,7 @@ namespace Ofiso.View.Windows
 
         private void AuthorizationPage_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-
+            BackBtn.IsEnabled = AuthorizationPage.NavigationService.CanGoBack;
         }
 
         private void btnProfile_Click(object sender, RoutedEventArgs e)
@@ -64,6 +64,22 @@ namespace Ofiso.View.Windows
         private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
             FrameHelper.mainFrame.Navigate(new AdminPage());
+        }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (AuthorizationPage.NavigationService.CanGoBack)
+            {
+                AuthorizationPage.NavigationService.GoBack();
+            }
+            else
+            {
+                MessageBox.Show("Нет предыдущих страниц.");
+            }
+        }
+        public void SetBackButtonVisibility(bool isVisible)
+        {
+            BackBtn.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }
